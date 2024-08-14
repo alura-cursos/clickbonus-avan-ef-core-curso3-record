@@ -1,4 +1,5 @@
 using ClickBonus_API.Context;
+using ClickBonus_API.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
@@ -35,6 +36,8 @@ app.MapGet("/api/usuarios", async ([FromServices] ClickBonusContext context) =>
     var usuarios = await context.Usuarios.ToListAsync();
     return Results.Ok(usuarios);
 });
+
+
 
 app.Run();
 
