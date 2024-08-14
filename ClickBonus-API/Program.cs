@@ -37,6 +37,26 @@ app.MapGet("/api/usuarios", async ([FromServices] ClickBonusContext context) =>
     return Results.Ok(usuarios);
 });
 
+app.MapGet("/api/bonus", (IMongoClient mongoClient) =>
+{
+    var dbContextOptions = new DbContextOptionsBuilder<ClickBonusMongoDBContext>().UseMongoDB(mongoClient, "db_Clickbonus");
+    var db = new ClickBonusMongoDBContext(dbContextOptions.Options);
+
+    return Results.Ok(db.Bonuses.ToList());
+
+}).WithTags("Bonus")
+.WithOpenApi();
+
+app.MapPost("/api/bonus", (IMongoClient mongoClient, [FromBody] Bonus bonus) =>
+{
+    var dbContextOptions = new DbContextOptionsBuilder<ClickBonusMongoDBContext>().UseMongoDB(mongoClient, "db_Clickbonus");
+    var db = new ClickBonusMongoDBContext(dbContextOptions.Options);
+    db.Bonuses.Add(bonus);
+    db.SaveChanges();
+    return Results.Ok(bonus);
+
+}).WithTags("Bonus")
+.WithOpenApi();
 
 
 app.Run();
