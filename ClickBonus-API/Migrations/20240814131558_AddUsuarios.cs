@@ -27,7 +27,11 @@ namespace ClickBonus_API.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            // Remover os 5 usuários da tabela Usuarios
+            migrationBuilder.DeleteData(
+                table: "Usuarios",
+                keyColumn: "Id",
+                keyValues: new object[] { 1, 2, 3, 4, 5 });
         }
     }
 }
